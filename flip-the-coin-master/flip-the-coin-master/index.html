@@ -4,18 +4,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Flip the coin game - a simple and fun coin toss simulator with retro pixel-style graphics. Try your luck with heads or tails!" />
 
   <link rel="icon" href="resources/favicon.ico" type="image/x-icon" sizes="96x96" />
 
-  <!-- Google Fonts for pixel-style typography -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <!-- Preload critical fonts to reduce layout shift -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" as="style" />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=VT323&display=swap" as="style" />
+
+  <!-- Load Google Fonts with swap to prevent render blocking -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+    media="print" onload="this.media='all'" />
+  <!-- Fallback for JS disabled browsers -->
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" />
+  </noscript>
 
   <title>Flip the coin | devChallenges.io</title>
 
-  <!--You are welcome to delete these styles or modify them in your own stylesheet -->
   <style>
+    /* Font fallbacks to prevent layout shift */
+    @font-face {
+      font-family: 'Press Start 2P Fallback';
+      size-adjust: 100%;
+      ascent-override: 90%;
+      src: local('monospace');
+    }
+
+    @font-face {
+      font-family: 'VT323 Fallback';
+      size-adjust: 100%;
+      ascent-override: 90%;
+      src: local('monospace');
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -29,7 +52,7 @@
       justify-content: start;
       align-items: center;
       padding: 40px 20px;
-      font-family: 'VT323', monospace;
+      font-family: 'VT323', 'VT323 Fallback', monospace;
       background-color: #404a65;
       background-image: linear-gradient(135deg, #404a65 0%, #2d3548 100%);
       gap: 20px;
@@ -79,7 +102,7 @@
     }
 
     .btn {
-      font-family: 'Press Start 2P', cursive;
+      font-family: 'Press Start 2P', 'Press Start 2P Fallback', cursive;
       box-shadow: 0px 4px 0px 0px #23649b, 0 0 15px rgba(32, 111, 177, 0.5);
       background-color: #206fb1;
       border-radius: 5px;
@@ -109,7 +132,7 @@
     }
 
     h1 {
-      font-family: 'Press Start 2P', cursive;
+      font-family: 'Press Start 2P', 'Press Start 2P Fallback', cursive;
       font-size: 40px;
       color: #ffffff;
       text-align: center;
@@ -124,7 +147,7 @@
     }
 
     h2 {
-      font-family: 'Press Start 2P', cursive;
+      font-family: 'Press Start 2P', 'Press Start 2P Fallback', cursive;
       font-size: 20px;
       color: #ffffff;
       text-align: center;
@@ -187,6 +210,8 @@
     }
 
     #coin-shadow {
+      width: 150px;
+      height: 30px;
       filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.5));
       transition: all 0.6s ease-out;
     }
@@ -221,11 +246,11 @@
   </div>
   <h1>Flip the coin</h1>
   <p>Press the coin or the button to flip the coin</p>
-  <div id="coin-container">
-    <img id="coin" src="./resources/heads.svg" alt="Heads" />
+  <div id="coin-container" style="margin-top: 30px;">
+    <img id="coin" src="./resources/heads.svg" alt="Heads" width="150" height="150" />
   </div>
-  <div style="margin-top: 15px;">
-    <img src="./resources/shadow.svg" alt="Shadow" id="coin-shadow" />
+  <div style="margin-top: 15px; height: 30px;">
+    <img src="./resources/shadow.svg" alt="Shadow" id="coin-shadow" width="150" height="30" />
   </div>
   <h2 id="result-text">Heads</h2>
   <button class="btn" id="flip-button">RANDOM</button>
