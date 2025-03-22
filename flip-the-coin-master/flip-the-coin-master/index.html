@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" href="resources/favicon.ico" type="image/x-icon" sizes="96x96" />
+
+  <!-- Google Fonts for pixel-style typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
+  <title>Flip the coin | devChallenges.io</title>
+
+  <!--You are welcome to delete these styles or modify them in your own stylesheet -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: center;
+      padding: 40px 20px;
+      font-family: 'VT323', monospace;
+      background-color: #404a65;
+      background-image: linear-gradient(135deg, #404a65 0%, #2d3548 100%);
+      gap: 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Diagonal glass stripe effect */
+    body::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    p {
+      color: #ffffff;
+      font-size: 22px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      z-index: 1;
+      letter-spacing: 1px;
+    }
+
+    .author-info {
+      font-size: 18px;
+      text-align: center;
+      margin-top: 16px;
+      color: #ffffff;
+      z-index: 1;
+    }
+
+    .author-info a {
+      text-decoration: none;
+      color: #ffffff;
+      transition: color 0.3s;
+    }
+
+    .author-info a:hover {
+      color: #a3ccf5;
+      text-shadow: 0 0 8px rgba(163, 204, 245, 0.6);
+    }
+
+    .btn {
+      font-family: 'Press Start 2P', cursive;
+      box-shadow: 0px 4px 0px 0px #23649b, 0 0 15px rgba(32, 111, 177, 0.5);
+      background-color: #206fb1;
+      border-radius: 5px;
+      text-align: center;
+      width: fit-content;
+      padding: 12px 30px;
+      color: #ffffff;
+      font-weight: 800;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      z-index: 1;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+
+    .btn:hover {
+      background-color: #2578bf;
+      box-shadow: 0px 4px 0px 0px #23649b, 0 0 20px rgba(32, 111, 177, 0.7);
+    }
+
+    .btn:active {
+      transform: translateY(4px);
+      box-shadow: 0px 0px 0px 0px #23649b, 0 0 10px rgba(32, 111, 177, 0.3);
+    }
+
+    h1 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 40px;
+      color: #ffffff;
+      text-align: center;
+      font-weight: 800;
+      text-shadow: 4px 4px 0px #35383f, 0 0 20px rgba(255, 255, 255, 0.4);
+      -webkit-text-stroke-width: 2px;
+      -webkit-text-stroke-color: #35383f;
+      z-index: 1;
+      line-height: 1.3;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    h2 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 20px;
+      color: #ffffff;
+      text-align: center;
+      transition: all 0.3s ease;
+      z-index: 1;
+      margin-top: 10px;
+      text-shadow: 2px 2px 0px #35383f;
+    }
+
+    .result-text-change {
+      animation: textPulse 0.5s ease;
+    }
+
+    @keyframes textPulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    #coin-container {
+      perspective: 1000px;
+      width: 150px;
+      height: 150px;
+      position: relative;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    #coin {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease-out;
+    }
+
+    .coin-flip {
+      animation: flip 1s ease-in-out;
+    }
+
+    @keyframes flip {
+      0% {
+        transform: rotateY(0deg);
+      }
+
+      100% {
+        transform: rotateY(1800deg);
+      }
+    }
+
+    #coin-shadow {
+      filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.5));
+      transition: all 0.6s ease-out;
+    }
+
+    .shadow-during-flip {
+      animation: shadowPulse 1s ease-out;
+    }
+
+    @keyframes shadowPulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="author-info">
+    Coded by <a href="#">lvtruong</a> | Challenge by
+    <a href="https://www.devchallenges.io?ref=challenge" target="_blank">devChallenges.io</a>.
+  </div>
+  <h1>Flip the coin</h1>
+  <p>Press the coin or the button to flip the coin</p>
+  <div id="coin-container">
+    <img id="coin" src="./resources/heads.svg" alt="Heads" />
+  </div>
+  <div style="margin-top: 15px;">
+    <img src="./resources/shadow.svg" alt="Shadow" id="coin-shadow" />
+  </div>
+  <h2 id="result-text">Heads</h2>
+  <button class="btn" id="flip-button">RANDOM</button>
+  <script>
+    const button = document.getElementById('flip-button');
+    const coin = document.getElementById('coin');
+    const coinContainer = document.getElementById('coin-container');
+    const coinShadow = document.getElementById('coin-shadow');
+    const headImg = './resources/heads.svg';
+    const tailImg = './resources/tails.svg';
+
+    const resultText = document.getElementById('result-text');
+
+    function flipCoin() {
+      // Disable button during animation
+      button.disabled = true;
+
+      // Start the coin flip animation
+      coin.classList.add('coin-flip');
+      coinShadow.classList.add('shadow-during-flip');
+
+      // Generate random result
+      const random = Math.random();
+      const isHeads = random < 0.5;
+
+      // Wait for animation to complete before showing result
+      setTimeout(() => {
+        // Update the coin image and text
+        coin.src = isHeads ? headImg : tailImg;
+        coin.alt = isHeads ? 'Heads' : 'Tails';
+
+        // Animate the result text
+        resultText.classList.add('result-text-change');
+        resultText.textContent = isHeads ? 'Heads' : 'Tails';
+
+        // Remove animations to prepare for next flip
+        setTimeout(() => {
+          coin.classList.remove('coin-flip');
+          coinShadow.classList.remove('shadow-during-flip');
+          resultText.classList.remove('result-text-change');
+          button.disabled = false;
+        }, 100);
+      }, 900);
+    }
+
+    // Click events
+    button.addEventListener('click', flipCoin);
+    coinContainer.addEventListener('click', flipCoin);
+  </script>
+</body>
+
+</html>
